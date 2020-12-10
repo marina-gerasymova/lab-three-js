@@ -8,27 +8,27 @@
 
 	<body>
 		<script type="module">
-			import * as THREE from './three.js-master/build/three.module.js';
-			import { TrackballControls } from './three.js-master/examples/jsm/controls/TrackballControls.js';
+	import * as THREE from './three.js-master/build/three.module.js';
+	import { TrackballControls } from './three.js-master/examples/jsm/controls/TrackballControls.js';
 
-			var perspectiveCamera, controls, scene, renderer, stats;
-			var frustumSize = 400;
-			let camera;
+	var perspectiveCamera, controls, scene, renderer, stats;
+	var frustumSize = 400;
+	let camera;
       var earthGroup, earthMesh, marsGroup, marsMesh, jupiterGroup, jupiterMesh, sunGroup, sunMesh
 	
-			init();
+	init();
       animate();
 
-			function init() {
-				var aspect = window.innerWidth / window.innerHeight;
-				perspectiveCamera = new THREE.PerspectiveCamera( 60, aspect, 1, 10000 );
-				perspectiveCamera.position.z = 2000;
+function init() {
+	var aspect = window.innerWidth / window.innerHeight;
+	perspectiveCamera = new THREE.PerspectiveCamera( 60, aspect, 1, 10000 );
+	perspectiveCamera.position.z = 2000;
 
-				scene = new THREE.Scene();
-				var texture = new THREE.TextureLoader().load( './textures/bg.jpg' );
-				scene.background = texture
+	scene = new THREE.Scene();
+	var texture = new THREE.TextureLoader().load( './textures/bg.jpg' );
+	scene.background = texture
 
-			  const earthTexture = new THREE.TextureLoader().load( './textures/earth.jpg' );
+  	const earthTexture = new THREE.TextureLoader().load( './textures/earth.jpg' );
         const marsTexture = new THREE.TextureLoader().load( './textures/mars.jpg' );
         const sunTexture = new THREE.TextureLoader().load( './textures/sun.jpg' );
         const jupiterTexture = new THREE.TextureLoader().load( './textures/jupiter.jpg' );
@@ -54,14 +54,14 @@
         sunGroup = new THREE.Group();
         const sunGeometry = new THREE.SphereBufferGeometry(100, 60, 40);
         const sunMesh = new THREE.Mesh( sunGeometry, new THREE.MeshBasicMaterial( { map: sunTexture } ) )
-				const L = new THREE.PointLight( 0xffffff, 1.25, 10000 );
-				L.add( new THREE.Mesh( sunGeometry, new THREE.MeshBasicMaterial( { map: sunTexture } ) ) );
+	const L = new THREE.PointLight( 0xffffff, 1.25, 10000 );
+	L.add( new THREE.Mesh( sunGeometry, new THREE.MeshBasicMaterial( { map: sunTexture } ) ) );
         
-				sunGroup.add( L );
+	sunGroup.add( L );
         scene.add(sunGroup)
 
-				var light = new THREE.AmbientLight( 0x666666 );
-				scene.add( light );
+	var light = new THREE.AmbientLight( 0x666666 );
+	scene.add( light );
         let j = 0;
 
         setInterval(() => {
@@ -73,21 +73,21 @@
           j++
         }, 20000)
 
-				renderer = new THREE.WebGLRenderer();
-				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				document.body.appendChild( renderer.domElement );
-				window.addEventListener( 'resize', onWindowResize, false );
-				createControls( perspectiveCamera );
+		renderer = new THREE.WebGLRenderer();
+		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+		window.addEventListener( 'resize', onWindowResize, false );
+		createControls( perspectiveCamera );
       }
 
-			function createControls( camera ) {
-				controls = new TrackballControls( camera, renderer.domElement );
-				controls.rotateSpeed = 4.0;
-				controls.zoomSpeed = 1.2;
-				controls.panSpeed = 0.8;
-				controls.maxDistance = 5000;
-			}
+	function createControls( camera ) {
+		controls = new TrackballControls( camera, renderer.domElement );
+		controls.rotateSpeed = 4.0;
+		controls.zoomSpeed = 1.2;
+		controls.panSpeed = 0.8;
+		controls.maxDistance = 5000;
+	}
 
       function createPlanet(scene, mesh, group, x, scale) {
         mesh.position.set(x, 0, 0);
@@ -96,13 +96,13 @@
         scene.add(group);
       }
 
-			function onWindowResize() {
-				var aspect = window.innerWidth / window.innerHeight;
-				perspectiveCamera.aspect = aspect;
-				perspectiveCamera.updateProjectionMatrix();
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				controls.handleResize();
-			}
+	function onWindowResize() {
+		var aspect = window.innerWidth / window.innerHeight;
+		perspectiveCamera.aspect = aspect;
+		perspectiveCamera.updateProjectionMatrix();
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		controls.handleResize();
+	}
       var i = 0
       function animate() {
           requestAnimationFrame( animate );
@@ -114,8 +114,11 @@
             i = 0
           
           earthGroup.rotation.y = i * 0.01
+          earthMesh.rotation.y = i * 0.0001
           marsGroup.rotation.y = i * 0.015
+	  marsMesh.rotation.y = i * 0.0002
           jupiterGroup.rotation.y = i * 0.005
+	  jupiterMesh.rotation.y = i * 0.0005
           renderer.render( scene, perspectiveCamera );
       }     
 		</script>
